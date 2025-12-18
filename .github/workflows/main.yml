@@ -1,0 +1,58 @@
+name: Spring boot docker image CI/CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      #소스 복사
+      #- name: 소스 복사
+      - uses: actions/checkout@v3
+
+      - name: Setup JDK17
+        uses: action/setup-java@v3
+        with: 
+          java-version: '17'
+          distribution: 'temurin'
+      - name: gradlew 파일 실행 권한 설정
+        run: chmod +x gradlew
+        
+      - name: Test with gradle
+        run: ./gradlew --info test
+
+      - name: Spring boot 실행 파일 생성
+        run: ./gradlew bootJar
+
+      - name: docker image 생성
+        run: docker build -t kosa5783/devops_step2:v1.0
+
+      - name: docker login
+        uses: docker/login-action@v1
+        with: 
+          username: kosa5783
+          password: ${{secrets.DOCKER_PASSWORD}}
+
+      - name: docker image 허브에 저장
+        run: docker push kosa5783/devops_step2:v1.0
+        
+        
+    
+  deploy:
+    needs: build
+    name: Deploy
+    runs-on: self-hosted
+    steps: 
+      - name: docker login
+        uses: docker/login-action@v1
+        with: 
+          username: kosa5783
+          password: ${{secrets.DOCKER_PASSWORD}}
+
+      - name: docker image pull
+        run: docker pull kosa5783/devops_step2:v1.0
+        
+    
