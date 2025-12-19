@@ -41,7 +41,7 @@ jobs:
           password: ${{secrets.DOCKER_PASSWORD}}
 
       - name: docker image 허브에 저장
-        run: docker push ${{env.DOCKER_USERNAME}}/devops_step2:v1.0
+        run: docker push ${{env.DOCKER_USERNAME}}/devops_step2:latest
         
         
     
