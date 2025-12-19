@@ -102,7 +102,7 @@ jobs:
       run: |
         cd kosa-devops-step2
         scp ./docker-compose_nginx.yml worker1:~
-        sudo scp ./nginx/nginx.conf      worker1:~/nginx/nginx.conf
+        scp ./nginx/nginx.conf      worker1:~/nginx/nginx.conf
         ssh worker1 ./run.sh > /dev/null
 
       
