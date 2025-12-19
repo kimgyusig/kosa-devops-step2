@@ -40,7 +40,7 @@ jobs:
         cd kosa-devops-step2
         ./gradlew --info test
      
-    - name: Spring boot  실행 파일 생성 '
+    - name: Spring boot  실행 파일 생성 
       run: |
         cd kosa-devops-step2
         ./gradlew bootJar 
