@@ -67,7 +67,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: my-artifact
-          path: ./docker-compose_nginx.yml    
+          
       - name: docker login
         uses: docker/login-action@v1
         with: 
