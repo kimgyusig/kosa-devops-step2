@@ -98,12 +98,22 @@ jobs:
     #- name: docker compose 실행
     #  run: docker compose -f docker-compose_nginx.yml up -d 
 
-    - name: 운영서버로 파일 복사 및 실행 
-      run: |
-        cd kosa-devops-step2
-        scp ./docker-compose_nginx.yml worker1:~
-        scp ./nginx/nginx.conf      worker1:~/nginx/nginx.conf
-        ssh worker1 ./run.sh > /dev/null
+    #- name: 운영서버로 파일 복사 및 실행 
+      #run: |
+        #cd kosa-devops-step2
+        #scp ./docker-compose_nginx.yml worker1:~
+        #scp ./nginx/nginx.conf      worker1:~/nginx/nginx.conf
+        #ssh worker1 ./run.sh > /dev/null
 
-      
+    deploy:
+      needs: build
+      runs-on: self-hosted
+      steps:
+      - uses: actions/checkout@v3
+
+      - name: Kubernetes deploy
+        run: |
+          kubectl apply -f k8s/deployment.yml
+          kubectl apply -f k8s/service.yml
+
     
