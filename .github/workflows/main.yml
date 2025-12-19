@@ -65,7 +65,7 @@ jobs:
           password: ${{secrets.DOCKER_PASSWORD}}
 
       - name: docker image pull
-        run: docker pull ${{env.DOCKER_USERNAME}}/devops_step2:v1.0
+        run: docker pull ${{env.DOCKER_USERNAME}}/devops_step2:latest
 
       - name: docker compose 실행
         run: docker compose -f docker-compose_nginx.yml up -d 
